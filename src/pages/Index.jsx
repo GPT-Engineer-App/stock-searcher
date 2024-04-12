@@ -13,9 +13,22 @@ const Index = () => {
 
   const fetchStockData = async () => {
     setLoading(true);
+    setError(null);
     try {
-      const response = await fetch(`/api/stock?ticker=${ticker}&start=${startDate}&end=${endDate}&interval=${interval}`);
-      const data = await response.json();
+      const response = await fetch(`https://query1.finance.yahoo.com/v7/finance/download/${ticker}?period1=${Math.floor(new Date(startDate).getTime() / 1000)}&period2=${Math.floor(new Date(endDate).getTime() / 1000)}&interval=${interval}&events=history&includeAdjustedClose=true`);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const csvData = await response.text();
+      const data = csvData
+        .split("\n")
+        .slice(1)
+        .map((row) => {
+          const [Date, Open, High, Low, Close, AdjClose, Volume] = row.split(",");
+          return { Date, Open, High, Low, Close, AdjClose, Volume };
+        });
       setStockData(data);
     } catch (err) {
       console.error("Error fetching stock data:", err);
