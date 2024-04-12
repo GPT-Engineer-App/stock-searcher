@@ -3,3 +3,6 @@ build = "npm run build"
 
 [gptengineer-app]
 project_id = "011abf6d-bf22-4d79-bbd3-3bd9429d2db8"
+
+[[gptengineer-app.openapi]]
+url = "https://query1.finance.yahoo.com/v7/finance/download/${ticker}?period1=${Math.floor(new Date(startDate).getTime() / 1000)}&period2=${Math.floor(new Date(endDate).getTime() / 1000)}&interval=${interval}&events=history&includeAdjustedClose=true"
