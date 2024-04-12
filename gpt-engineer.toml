@@ -3,4 +3,6 @@ build = "npm run build"
 
 [gptengineer-app]
 project_id = "011abf6d-bf22-4d79-bbd3-3bd9429d2db8"
-openapi = []
+
+[[gptengineer-app.openapi]]
+url = "https://github.com/pilwon/node-yahoo-finance/issues/52"
